@@ -168,7 +168,7 @@
     
     [self stopTimer];
     
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents]
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kRefreshInterval
                                                   target:self
                                                 selector:@selector(tickToDisappear)
