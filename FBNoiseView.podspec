@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "FBNoiseView"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "View supports noise effect"
   s.description  = <<-DESC
   This library provids view classes support noise effect
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "Lyo Kato" => "lyo.kato@gmail.com" }
   s.platform     = :ios, '6.0'
-  s.source       = { :git => "https://github.com/lyokato/FBNoiseView.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/lyokato/FBNoiseView.git", :tag => "0.0.2" }
   s.source_files  = 'FBNoiseView/Classes/*.{h,m}'
   s.exclude_files = 'Classes/Exclude'
   # s.public_header_files = 'Classes/**/*.h'
