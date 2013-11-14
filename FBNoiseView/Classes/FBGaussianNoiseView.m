@@ -68,7 +68,7 @@
 
 - (void)setupBlocks
 {
-    CGSize ss = UIScreen.mainScreen.bounds.size;
+    CGSize ss = self.bounds.size;
     NSInteger numberOfColumns = ss.width / self.noiseImage.size.width + 1;
     NSInteger numberOfRows    = ss.height / self.noiseImage.size.height + 1;
     

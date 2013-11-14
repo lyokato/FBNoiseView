@@ -17,6 +17,12 @@
 
 @interface FBRandomBlockNoiseView : UIView
 @property (nonatomic, weak) id<FBRandomBlockNoiseViewDelegate> delegate;
+@property (nonatomic) CGFloat blockWidth;
+@property (nonatomic) CGFloat blockHeight;
+@property (nonatomic) NSInteger numberOfTransitionAtSingleTick;
+@property (nonatomic) CGFloat refreshInterval;
+@property (nonatomic) CGFloat animationDuration;
+@property (nonatomic) CGFloat maxBlockAlpha;
 - (void)startToAppear;
 - (void)startToDisappear;
 @end

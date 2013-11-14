@@ -8,17 +8,18 @@
 
 #import "FBRandomBlockNoiseView.h"
 
-#define kRefreshInterval   0.015
-#define kMaxAlpha          0.9
-#define kAnimationDuration 0.2
+#define kDefaultRefreshInterval    0.015
+#define kDefaultMaxBlockAlpha      0.9
+#define kDefaultAnimationDuration  0.2
+#define kDefaultBlockWidth        30.0
+#define kDefaultBlockHeight       30.0
+
+#define kDefaultNumberOfTransitionAtSingleTick 4
 
 @interface FBRandomBlockNoiseView ()
 @property (nonatomic) NSArray *blockViews;
 @property (nonatomic) NSMutableArray *tmpViews;
-@property (nonatomic) CGFloat blockWidth;
-@property (nonatomic) CGFloat blockHeight;
 @property (nonatomic) NSTimer *timer;
-@property (nonatomic) NSInteger numberOfTransitionAtSingleTick;
 @end
 
 @implementation FBRandomBlockNoiseView
@@ -35,9 +36,12 @@
 - (void)setup
 {
     self.backgroundColor = UIColor.clearColor;
-    self.blockWidth = 30;
-    self.blockHeight = 30;
-    self.numberOfTransitionAtSingleTick = 4;
+    self.refreshInterval = kDefaultRefreshInterval;
+    self.animationDuration = kDefaultAnimationDuration;
+    self.maxBlockAlpha = kDefaultMaxBlockAlpha;
+    self.blockWidth = kDefaultBlockWidth;
+    self.blockHeight = kDefaultBlockHeight;
+    self.numberOfTransitionAtSingleTick = kDefaultNumberOfTransitionAtSingleTick;
     self.tmpViews = @[].mutableCopy;
     [self setupBlocks];
 }
@@ -70,9 +74,9 @@
 - (void)tickToAppear
 {
     NSArray *views = [self nextTargetViews];
-    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         for (UIView *v in views) {
-            v.alpha = kMaxAlpha - arc4random_uniform(3) * 0.1;
+            v.alpha = self.maxBlockAlpha - arc4random_uniform(3) * 0.1;
         }
     } completion:nil];
     if (self.tmpViews.count == 0) {
@@ -87,7 +91,7 @@
 - (void)startNoiseEffect
 {
     [self stopTimer];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kRefreshInterval
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.refreshInterval
                                                   target:self
                                                 selector:@selector(tickToNoise)
                                                 userInfo:nil
@@ -112,9 +116,9 @@
         [views addObject:view];
     }
 
-    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         for (UIView *v in views) {
-            v.alpha = kMaxAlpha - arc4random_uniform(3) * 0.1;
+            v.alpha = self.maxBlockAlpha - arc4random_uniform(3) * 0.1;
         }
     } completion:nil];
 }
@@ -122,7 +126,7 @@
 - (void)tickToDisappear
 {
     NSArray *views = [self nextTargetViews];
-    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         for (UIView *v in views) {
             v.alpha = 0.0;
         }
@@ -169,7 +173,7 @@
     [self stopTimer];
     
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kRefreshInterval
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.refreshInterval
                                                   target:self
                                                 selector:@selector(tickToDisappear)
                                                 userInfo:nil
@@ -183,7 +187,7 @@
 
 - (void)setupBlocks
 {
-    CGSize ss = UIScreen.mainScreen.bounds.size;
+    CGSize ss = self.bounds.size;
     NSInteger numberOfColumns = ss.width / self.blockWidth + 1;
     NSInteger numberOfRows    = ss.height / self.blockHeight + 1;
     

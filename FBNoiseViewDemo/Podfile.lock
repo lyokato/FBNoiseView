@@ -1,0 +1,14 @@
+PODS:
+  - FBNoiseView (0.0.2)
+
+DEPENDENCIES:
+  - FBNoiseView (from `..`)
+
+EXTERNAL SOURCES:
+  FBNoiseView:
+    :path: ..
+
+SPEC CHECKSUMS:
+  FBNoiseView: 97b47718fc712d5e602e8547e64639b46ceaf9e6
+
+COCOAPODS: 0.27.1
